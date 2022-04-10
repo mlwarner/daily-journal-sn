@@ -1,6 +1,6 @@
 {
-    "identifier": "com.mwarner.standard-journal",
-    "name": "Standard Journal",
+    "identifier": "com.mwarner.daily-journal-sn",
+    "name": "Daily Journal SN",
     "content_type": "SN|Component",
     "area": "editor-stack",
     "version": "0.1.0",
