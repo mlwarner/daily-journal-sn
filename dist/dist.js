@@ -89,7 +89,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_BridgeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/BridgeManager */ "./app/lib/BridgeManager.js");
+/* harmony import */ var _lib_ComponentRelayManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/ComponentRelayManager */ "./app/lib/ComponentRelayManager.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -127,18 +127,26 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {};
-    _lib_BridgeManager__WEBPACK_IMPORTED_MODULE_1__["default"].get().addUpdateObserver(function () {
-      _this.setState({
-        note: _lib_BridgeManager__WEBPACK_IMPORTED_MODULE_1__["default"].get().getNote()
-      });
-    });
     return _this;
   }
 
   _createClass(Home, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // We don't need any data to render our UX. Bind after rendering
+      _lib_ComponentRelayManager__WEBPACK_IMPORTED_MODULE_1__["default"].get().initiateBridge();
+    }
+  }, {
+    key: "handleCreateDailyNote",
+    value: function handleCreateDailyNote() {
+      console.log('do some creatin..');
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Component is ready."), this.state.note && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Working note title: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, this.state.note.content.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Working note content: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, this.state.note.content.text))));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Component is ready."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+        onClick: this.handleCreateDailyNote
+      }, "Create daily note"));
     }
   }]);
 
@@ -149,25 +157,19 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./app/lib/BridgeManager.js":
-/*!**********************************!*\
-  !*** ./app/lib/BridgeManager.js ***!
-  \**********************************/
+/***/ "./app/lib/ComponentRelayManager.js":
+/*!******************************************!*\
+  !*** ./app/lib/ComponentRelayManager.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ BridgeManager)
+/* harmony export */   "default": () => (/* binding */ ComponentRelayManager)
 /* harmony export */ });
 /* harmony import */ var _standardnotes_component_relay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @standardnotes/component-relay */ "./node_modules/@standardnotes/component-relay/dist/dist.js");
 /* harmony import */ var _standardnotes_component_relay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_standardnotes_component_relay__WEBPACK_IMPORTED_MODULE_0__);
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -176,83 +178,53 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
- //import ComponentManager from 'sn-components-api';
 
-var BridgeManager = /*#__PURE__*/function () {
-  function BridgeManager() {
-    _classCallCheck(this, BridgeManager);
 
-    this.updateObservers = [];
-    this.initiateBridge();
+var ComponentRelayManager = /*#__PURE__*/function () {
+  function ComponentRelayManager() {
+    _classCallCheck(this, ComponentRelayManager);
   }
 
-  _createClass(BridgeManager, [{
-    key: "addUpdateObserver",
-    value: function addUpdateObserver(callback) {
-      var observer = {
-        callback: callback
-      };
-      this.updateObservers.push(observer);
-      return observer;
-    }
-  }, {
-    key: "notifyObserversOfUpdate",
-    value: function notifyObserversOfUpdate() {
-      var _iterator = _createForOfIteratorHelper(this.updateObservers),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var observer = _step.value;
-          observer.callback();
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-    }
-  }, {
-    key: "getNote",
-    value: function getNote() {
-      return this.note;
-    }
-  }, {
+  _createClass(ComponentRelayManager, [{
     key: "initiateBridge",
     value: function initiateBridge() {
-      var permissions = [{
-        name: "stream-context-item" // name: "stream-items"
+      var _this = this;
 
+      var permissions = [{
+        name: 'stream-context-item'
       }];
-      this.componentRelay = new (_standardnotes_component_relay__WEBPACK_IMPORTED_MODULE_0___default())(permissions, function () {// on ready
-      }); //this.componentManager = new ComponentManager(permissions, function(){
-      // on ready
-      //});
-      // this.componentManager.streamContextItem((item) => {
-      //   this.note = item;
-      //   this.notifyObserversOfUpdate();
-      // })
-      // this.componentManager.streamItems(["SN|Component", "SN|Theme", "SF|Extension"], (items) => {
-      //   this.items = items.filter((item) => {return !item.isMetadataUpdate});
-      // });
+      this.componentRelay = new (_standardnotes_component_relay__WEBPACK_IMPORTED_MODULE_0___default())({
+        targetWindow: window,
+        permissions: permissions,
+        onReady: function onReady() {
+          _this.onReady && _this.onReady();
+        }
+      });
+      this.componentRelay.streamContextItem(function (item) {
+        _this.note = item;
+
+        if (note.isMetadataUpdate) {
+          return;
+        }
+      });
     }
   }], [{
     key: "get",
     value:
     /* Singleton */
     function get() {
-      if (this.instance == null) {
-        this.instance = new BridgeManager();
+      if (this.instance === null) {
+        this.instance = new ComponentRelayManager();
       }
 
       return this.instance;
     }
   }]);
 
-  return BridgeManager;
+  return ComponentRelayManager;
 }();
 
-_defineProperty(BridgeManager, "instance", null);
+_defineProperty(ComponentRelayManager, "instance", null);
 
 
 
@@ -29866,6 +29838,39 @@ if (
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
@@ -33423,12 +33428,16 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./app/App.js");
 
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_App__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.body.appendChild(document.createElement('div')));
+var container = document.getElementById('root');
+var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container);
+root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_App__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  tab: "home"
+}));
 })();
 
 /******/ })()
