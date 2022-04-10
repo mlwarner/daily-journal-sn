@@ -29,7 +29,7 @@ export default class ComponentRelayManager {
     this.componentRelay.streamContextItem((item) => {
       this.note = item;
 
-      if (note.isMetadataUpdate) {
+      if (item.isMetadataUpdate) {
         return;
       }
     });
