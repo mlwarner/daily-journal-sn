@@ -65,7 +65,9 @@ var App = /*#__PURE__*/function (_React$Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Home__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        id: "daily-journal-sn"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Home__WEBPACK_IMPORTED_MODULE_1__["default"], null));
     }
   }]);
 
@@ -140,6 +142,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
     key: "handleCreateDailyNote",
     value: function handleCreateDailyNote() {
       console.log('do some creatin..');
+      _lib_ComponentRelayManager__WEBPACK_IMPORTED_MODULE_1__["default"].get().createDailyNote();
+      console.log('and.... done!');
     }
   }, {
     key: "render",
@@ -188,24 +192,35 @@ var ComponentRelayManager = /*#__PURE__*/function () {
   _createClass(ComponentRelayManager, [{
     key: "initiateBridge",
     value: function initiateBridge() {
-      var _this = this;
-
+      // TODO: Find a way to import the enums directory from the component relay library
+      // https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/snjsTypes.ts#L9
       var permissions = [{
-        name: 'stream-context-item'
-      }];
+        name: 'create-item'
+      } // {
+      //   name: 'stream-items'
+      // }
+      ];
       this.componentRelay = new (_standardnotes_component_relay__WEBPACK_IMPORTED_MODULE_0___default())({
         targetWindow: window,
-        permissions: permissions,
-        onReady: function onReady() {
-          _this.onReady && _this.onReady();
-        }
-      });
-      this.componentRelay.streamContextItem(function (item) {
-        _this.note = item;
+        permissions: permissions // onReady: () => {
+        //   this.onReady && this.onReady();
+        // }
 
-        if (note.isMetadataUpdate) {
-          return;
-        }
+      }); // this.componentRelay.streamContextItem((item) => {
+      //   this.note = item;
+      //   if (item.isMetadataUpdate) {
+      //     return;
+      //   }
+      // });
+    }
+  }, {
+    key: "createDailyNote",
+    value: function createDailyNote() {
+      // TODO: Find a way to import the enums directory from the component relay library
+      this.componentRelay.createItem({
+        //content_type: 'Note',
+        content_type: 'SF|Item',
+        content: 'hello world!'
       });
     }
   }], [{

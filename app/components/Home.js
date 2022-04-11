@@ -16,6 +16,8 @@ export default class Home extends React.Component {
 
   handleCreateDailyNote() {
     console.log('do some creatin..');
+    ComponentRelayManager.get().createDailyNote();
+    console.log('and.... done!');
   }
 
   render() {
