@@ -21,20 +21,30 @@ export default class ComponentRelayManager {
   initiateBridge() {
     // TODO: Find a way to import the enums directory from the component relay library. Or from snjs core
     // https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/snjsTypes.ts#L9
-    const permissions = [
+    const initialPermissions = [
       { // TODO I think this is the only one I really need, but nothing is working!!!
         name: 'create-item',
-        content_types: ['Note'],
+        //content_types: ['*'],
+        // content_types: ['Note'],
       },
       {
         name: 'stream-items',
-        content_types: ['Note'],
-      }
+        content_types: ['*']
+      },
+      {
+        name: 'stream-context-item',
+      },
+      {
+        name: 'click',
+      },
     ];
 
     this.componentRelay = new ComponentRelay({
       targetWindow: window,
-      permissions,
+      initialPermissions: initialPermissions,
+      options: {
+        debug: true
+      }
     });
   }
 
@@ -42,15 +52,19 @@ export default class ComponentRelayManager {
     * Create a note using the component relay.
     * The format for ItemPayload is quite simple
     * https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/componentRelay.ts#L92
+    * 
+    * Error is coming from https://github.com/standardnotes/snjs/blob/d9a2d0ff6ffce8ca6c9683437437dd65361618c5/packages/snjs/lib/Services/ComponentManager/ComponentManager.ts#L326
     */
   createDailyNote() {
     // TODO: Find a way to import the enums directory from the component relay library. Or from snjs core
-    this.componentRelay.createItem({
+    const noteItem = {
       content_type: 'Note',
       content: {
-        title: 'Ideas',
-        text: 'Coming soon.'
+        title: 'My note',
+        text: 'This is an ordinary Note item that will created from an extension.'
       }
-    }, (item) => console.log(item));
+    };
+    // console.log(this.componentRelay);
+    this.componentRelay.createItem(noteItem);
   }
 }
