@@ -12,6 +12,11 @@ export default class Home extends React.Component {
   componentDidMount() {
     // We don't need any data to render our UX. Bind after rendering
     ComponentRelayManager.get().initiateBridge();
+
+    // Show the note titles as proof our bridge works
+    ComponentRelayManager.get().streamContextItem((item) => {
+      this.setState({note: item});
+    });
   }
 
   handleCreateDailyNote() {
@@ -24,6 +29,9 @@ export default class Home extends React.Component {
     return (
       <div>
         <p>Component is ready.</p>
+      {this.state.note && 
+        <p>Note title: <strong>{this.state.note.content.title}</strong></p>
+      }
         <button onClick={this.handleCreateDailyNote}>
           Create daily note
         </button>

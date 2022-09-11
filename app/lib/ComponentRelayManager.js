@@ -22,7 +22,7 @@ export default class ComponentRelayManager {
     // TODO: Find a way to import the enums directory from the component relay library. Or from snjs core
     // https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/snjsTypes.ts#L9
     const initialPermissions = [
-      { // TODO I think this is the only one I really need, but nothing is working!!!
+      {
         name: 'create-item',
         //content_types: ['*'],
         // content_types: ['Note'],
@@ -34,14 +34,11 @@ export default class ComponentRelayManager {
       {
         name: 'stream-context-item',
       },
-      {
-        name: 'click',
-      },
     ];
 
     this.componentRelay = new ComponentRelay({
       targetWindow: window,
-      initialPermissions: initialPermissions,
+      // initialPermissions: initialPermissions,
       options: {
         debug: true
       }
@@ -50,13 +47,11 @@ export default class ComponentRelayManager {
 
   /**
     * Create a note using the component relay.
-    * The format for ItemPayload is quite simple
-    * https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/componentRelay.ts#L92
-    * 
-    * Error is coming from https://github.com/standardnotes/snjs/blob/d9a2d0ff6ffce8ca6c9683437437dd65361618c5/packages/snjs/lib/Services/ComponentManager/ComponentManager.ts#L326
     */
   createDailyNote() {
     // TODO: Find a way to import the enums directory from the component relay library. Or from snjs core
+    // The format for ItemPayload can be found here
+    // https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/componentRelay.ts#L92
     const noteItem = {
       content_type: 'Note',
       content: {
@@ -64,7 +59,16 @@ export default class ComponentRelayManager {
         text: 'This is an ordinary Note item that will created from an extension.'
       }
     };
-    // console.log(this.componentRelay);
+
+    /*
+      * Error is coming from https://github.com/standardnotes/snjs/blob/d9a2d0ff6ffce8ca6c9683437437dd65361618c5/packages/snjs/lib/Services/ComponentManager/ComponentManager.ts#L326
+      * It looks like only 3 specific feature-identifiers can access the `createItem` API
+      * https://github.com/standardnotes/snjs/blob/ef2d0d9d46cc7c0251bb496a2afbd71cbb354ed8/packages/snjs/lib/Services/ComponentManager/Types.ts#L42-L46
+      */
     this.componentRelay.createItem(noteItem);
+  }
+
+  streamContextItem(callback) {
+    this.componentRelay.streamContextItem(callback);
   }
 }
