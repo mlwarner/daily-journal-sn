@@ -14,6 +14,8 @@ export default class ComponentRelayManager {
   /**
     * Initiate the relay manager to communicate with Standard Notes.
     *
+    * Documentation at https://standardnotes.github.io/component-relay/classes/default.html
+    *
     * https://github.com/standardnotes/snjs/blob/640012e2aa0d956b9a7ffd92a1435e9bd072229f/packages/features/src/Domain/Component/ComponentPermission.ts#L4
     * https://github.com/standardnotes/snjs/blob/abccd1c451a5a5e26f7666df52996a792aca07bf/packages/common/src/Domain/Content/ContentType.ts#L2
     */
@@ -23,13 +25,8 @@ export default class ComponentRelayManager {
     // https://github.com/standardnotes/component-relay/blob/3715d242d40212cc6b909d0988660911b15dcd89/lib/snjsTypes.ts#L9
     const initialPermissions = [
       {
-        name: 'create-item',
-        //content_types: ['*'],
-        // content_types: ['Note'],
-      },
-      {
         name: 'stream-items',
-        content_types: ['*']
+        content_types: ['Note']
       },
       {
         name: 'stream-context-item',
@@ -38,7 +35,7 @@ export default class ComponentRelayManager {
 
     this.componentRelay = new ComponentRelay({
       targetWindow: window,
-      // initialPermissions: initialPermissions,
+      //initialPermissions: initialPermissions,
       options: {
         debug: true
       }
