@@ -61,9 +61,9 @@ export default class ComponentRelayManager {
     };
 
     /*
-      * Error is coming from https://github.com/standardnotes/snjs/blob/d9a2d0ff6ffce8ca6c9683437437dd65361618c5/packages/snjs/lib/Services/ComponentManager/ComponentManager.ts#L326
+      * Error is coming from https://github.com/standardnotes/app/blob/main/packages/snjs/lib/Services/ComponentManager/ComponentManager.ts#L341-L378
       * It looks like only 3 specific feature-identifiers can access the `createItem` API
-      * https://github.com/standardnotes/snjs/blob/ef2d0d9d46cc7c0251bb496a2afbd71cbb354ed8/packages/snjs/lib/Services/ComponentManager/Types.ts#L42-L46
+      * https://github.com/standardnotes/app/blob/main/packages/snjs/lib/Services/ComponentManager/Types.ts#L26-L30
       */
     this.componentRelay.createItem(noteItem);
   }
